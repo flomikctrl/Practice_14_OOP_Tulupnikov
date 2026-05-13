@@ -85,11 +85,40 @@ Console.WriteLine(message1);
 string message2 = GetWelcome("french", "morning");
 Console.WriteLine(message2);
 
-string GetWelcome(string lang, string daytime) => (lang, daytime) switch {
+string GetWelcome(string lang, string daytime) => (lang, daytime) switch
+{
     ("english", "morning") => "Good morning",
     ("english", "evening") => "Good evening",
     ("german", "morning") => "Guten Morgen",
     ("german", "evening") => "Guten Abend",
     (_, "admin") => "Hello, Admin",
     _ => "Добрый день"
+};
+
+
+
+Console.WriteLine(GetNumber([1, 2, 3, 4, 5]));
+Console.WriteLine(GetNumber([1, 2]));
+Console.WriteLine(GetNumber([]));
+Console.WriteLine(GetNumber([1, 2, 5]));
+
+int GetNumber(int[] values) => values switch
+{
+    [1, 2, 3, 4, 5] => 1,
+    [1, 2, 3] => 2,
+    [1, 2] => 3,
+    [] => 4,
+    _ => 5
+};
+
+List<int> numbers = [1, 2, 3];
+Console.WriteLine(GetNumberList(numbers));
+
+int GetNumberList(List<int> values) => values switch
+{
+    [1, 2, 3, 4, 5] => 1,
+    [1, 2, 3] => 2,
+    [1, 2] => 3,
+    [] => 4,
+    _ => 5
 };
