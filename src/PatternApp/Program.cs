@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 // Employee denis = new Manager();
 // UseEmployee(denis);
@@ -122,3 +123,102 @@ int GetNumberList(List<int> values) => values switch
     [] => 4,
     _ => 5
 };
+
+
+
+// Задание 1
+DescribeAnimal(new Dog { Breed = "Лабрадор" });
+DescribeAnimal(new Cat { IsIndoor = true });
+DescribeAnimal(null);
+
+// Задание 2
+var p1 = new Product { Category = "food", Price = 500 };
+var p2 = new Product { Category = "electronics", Country = "USA" };
+Console.WriteLine(GetDiscount(p1));
+Console.WriteLine(GetDiscount(p2));
+
+// Задание 3
+Console.WriteLine(GetTransport("Москва", "дождь", "день"));
+Console.WriteLine(GetTransport("Москва", "солнце", "ночь"));
+Console.WriteLine(GetTransport("Питер", "снег", "утро"));
+
+// Задание 4
+int[][] testArrays = [
+    [1, 2, 3],
+    [1, 5, 10],
+    [1, 5, 6, 7, 9],
+    [1, 2, 3, 4]
+];
+
+foreach (var arr in testArrays)
+{
+    Console.WriteLine(AnalyzeList(arr));
+    SpecialLengthCheck(arr);
+}
+
+// Методы 
+void DescribeAnimal(Animal? animal)
+{
+    switch (animal)
+    {
+        case Dog dog:
+            Console.WriteLine($"Собака породы {dog.Breed}");
+            break;
+        case Cat cat:
+            Console.WriteLine(cat.IsIndoor ? "Домашняя кошка" : "Уличная кошка");
+            break;
+        case null:
+            Console.WriteLine("null");
+            break;
+        default:
+            Console.WriteLine("Неизвестное животное");
+            break;
+    }
+}
+
+string GetDiscount(Product? p) => p switch
+{
+    { Category: "electronics", Country: "USA" } => "10% discount",
+    { Category: "food", Price: var price } => $"5% discount ({price * 0.05} руб.)",
+    { Category: "electronics" } => "7% discount",
+    { } => "no discount",
+    null => "invalid product"
+};
+
+string GetTransport(string city, string weather, string time) => (city, weather, time) switch
+{
+    ("Москва", "дождь", _) => "Берите такси",
+    ("Москва", _, "ночь") => "Метро закрыто, берите такси",
+    ("Москва", _, _) => "Можно на метро",
+    (_, "снег", _) => "Сложная ситуация",
+    _ => "Идите пешком"
+};
+
+string AnalyzeList(int[] numbers) => numbers switch
+{
+    [1, 2, 3] => "exact",
+    [1, _, _] => "starts with 1",
+    [1, .., 9] => "from 1 to 9",
+    [var first, var second, .., var last] => $"first={first}, second={second}, last={last}",
+    [..] => "other"
+};
+
+void SpecialLengthCheck(int[] numbers)
+{
+    if (numbers is { Length: 4 } and [var a, var b, var c, var d])
+    {
+        Console.WriteLine($"Length 4: {a}, {b}, {c}, {d}");
+    }
+}
+
+// Классы 
+public class Animal { }
+public class Dog : Animal { public string Breed { get; set; } = ""; }
+public class Cat : Animal { public bool IsIndoor { get; set; } }
+
+public class Product
+{
+    public string Category { get; set; } = "";
+    public string Country { get; set; } = "";
+    public double Price { get; set; }
+}
