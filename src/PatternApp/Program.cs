@@ -69,10 +69,27 @@ void SayHello(Person person) {
     }
 }
 
-string GetMessage(Person? p) => p switch {
+string GetMessage(Person? p) => p switch
+{
     { Language: "english" } => "Hello!",
     { Language: "german", Status: "admin" } => "Hallo, admin!",
     { Language: "french" } => "Salute!",
     { } => "undefined",
     null => "null"
+};
+
+
+string message1 = GetWelcome("english", "evening");
+Console.WriteLine(message1);
+
+string message2 = GetWelcome("french", "morning");
+Console.WriteLine(message2);
+
+string GetWelcome(string lang, string daytime) => (lang, daytime) switch {
+    ("english", "morning") => "Good morning",
+    ("english", "evening") => "Good evening",
+    ("german", "morning") => "Guten Morgen",
+    ("german", "evening") => "Guten Abend",
+    (_, "admin") => "Hello, Admin",
+    _ => "Добрый день"
 };
